@@ -40,10 +40,8 @@ public class TestThreadTime {
 			while (true) {
 				
 				// Affiche l'heure courante
-				// System.out.println(df.format(new Date()));
-				// \r ramène le curseur au début de la ligne
-				System.out.print("\r" + df.format(new Date()));
-				
+				System.out.println(df.format(new Date()));
+
 				try {
 					// Attend une seconde avant le prochain affichage
 					Thread.sleep(delai);
