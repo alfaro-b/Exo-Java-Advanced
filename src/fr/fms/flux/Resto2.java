@@ -3,6 +3,7 @@ package fr.fms.flux;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -155,25 +156,48 @@ public class Resto2 {
 	}
 
 	/**
-	 * Affiche les produits disponibles d'une catégorie et retourne le choix de l'utilisateur.
+	 * Affiche les produits disponibles d'une catégorie,
+	 * vérifie le choix de l'utilisateur et retourne un choix valide.
 	 *
 	 * @param scan scanner utilisé pour la saisie
 	 * @param category catégorie de produit demandée
 	 * @param products produits disponibles dans cette catégorie
-	 * @return numéro du choix effectué
+	 * @return numéro du choix valide effectué
 	 */
 	public static int getInfos(Scanner scan,String category, Product[] products) {
-
-		System.out.println("choix " + category + " : ");
-
-		System.out.println("0 - AUCUN");
-		displayTable(products);
 		
-		System.out.println("que souhaitez vous comme " + category + " ? [saisir le chiffre correspondant]");
-
-		return scan.nextInt();
+		while (true) {
+			System.out.println("choix " + category + " : ");
+	
+			System.out.println("0 - AUCUN");
+			displayTable(products);
+			
+			System.out.println("que souhaitez vous comme " + category + " ? [saisir le chiffre correspondant]");
+			
+			try {
+				
+				int choice = scan.nextInt();
+				
+				if (choice < 0 || choice > products.length) {
+					throw new InvalidChoiceException("Le choix " + choice + " n'existe pas.");
+				}
+				return choice;
+				
+			} catch (InvalidChoiceException e){
+				
+				System.out.println(e.getMessage());
+				System.out.println("Veuillez recommencer.");
+				
+			} catch (InputMismatchException e) {
+				
+				System.out.println("Vous devez saisir un nombre.");
+				System.out.println("Veuillez recommencer.");
+				
+				scan.next();			
+				}
+		}
 	}
-
+	
 	/**
 	 * Affiche les produits disponibles avec leur prix.
 	 *
