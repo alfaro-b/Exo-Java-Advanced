@@ -141,7 +141,7 @@ public class Resto2 {
 			System.out.println("TOTAL COMMANDE : " + totalOrder + " €");
 			
 			// ECRITURE DANS LE FICHIER du montant total de la commande
-			writer.write("================================");
+			writer.write("***************************************************");
 			writer.newLine();
 			writer.write("TOTAL COMMANDE : " + totalOrder + " €");
 			writer.newLine();
