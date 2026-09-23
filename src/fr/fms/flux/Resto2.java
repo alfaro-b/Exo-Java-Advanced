@@ -51,6 +51,10 @@ public class Resto2 {
 
 			// Contient les produits sélectionnés pour le menu en cours.
 			ArrayList<Product> order = new ArrayList<Product>();
+			
+			double totalMenu = 0;
+			double totalOrder = 0;
+
 
 			// Répète la saisie pour chaque menu de la commande.
 			for (int i = 0; i < nbMenu; i++) {
@@ -78,32 +82,33 @@ public class Resto2 {
 				result = getInfos(scan, "desserts", DESSERTS);
 				if (result != 0)
 					order.add(DESSERTS[result-1]);
-
-				// =========================
-				// AFFICHAGE CONSOLE
-				// =========================
+				
+				// Calcule le total d'un menu avec un Stream
+				
+				// La lambda product -> product.getPrice() récupère le prix de chaque produit
+				// puis sum() additionne les prix
+				totalMenu = order.stream()
+					.mapToDouble(product -> product.getPrice())
+					.sum();
+				// Même écriture avec une référence de méthode Product::getPrice
+				// totalMenu = order.stream().mapToDouble(Product::getPrice).sum();
+				
+				// Ajoute le total du menu au total général de la commande.
+				totalOrder += totalMenu;
+				
+				// AFFICHAGE CONSOLE du menu
 				System.out.println("-".repeat(30));
 				System.out.println("Résumé du menu " + (i + 1));
 				System.out.println();
 				
-				// Calcule le total d'un menu avec un Stream
-				// La lambda product -> product.getPrice() récupère le prix de chaque produit
-				// puis sum() additionne les prix
-				double total = order.stream()
-						.mapToDouble(product -> product.getPrice())
-						.sum();
-				// Même écriture avec une référence de méthode Product::getPrice
-				// double total = order.stream().mapToDouble(Product::getPrice).sum();
-				
 				for (Product product : order) {
 					System.out.println(product);
 				}
+				
+				System.out.println("Total menu : " + totalMenu + " €");			
+				System.out.println("-".repeat(30));
 
-				System.out.println("Total : " + total + " €");
-
-				// =========================
-				// ECRITURE DANS LE FICHIER
-				// =========================
+				// ECRITURE DANS LE FICHIER du menu
 				writer.write("******************** Résumé du menu N°" + (i + 1) + " ********************");
 				writer.newLine();
 
@@ -122,13 +127,24 @@ public class Resto2 {
 				writer.write("------------------------------");
 				writer.newLine();
 
-				writer.write("TOTAL : " + total + " €");
+				writer.write("TOTAL MENU : " + totalMenu + " €");
 				writer.newLine();
+				
 				writer.newLine();
 
 				// Réinitialise la liste avant la commande suivante.
 				order.clear();
 			}
+			
+			// AFFICHAGE CONSOLE du montant total de la commande
+			System.out.println("-".repeat(30));
+			System.out.println("TOTAL COMMANDE : " + totalOrder + " €");
+			
+			// ECRITURE DANS LE FICHIER du montant total de la commande
+			writer.write("================================");
+			writer.newLine();
+			writer.write("TOTAL COMMANDE : " + totalOrder + " €");
+			writer.newLine();
 
 			System.out.println("\n Le fichier order2.txt a été généré.");
 

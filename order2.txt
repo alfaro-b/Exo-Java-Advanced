@@ -5,5 +5,16 @@ riz - 3.5 €
 eau plate - 2.0 €
 tarte maison - 6.0 €
 ------------------------------
-TOTAL : 29.5 €
+TOTAL MENU : 29.5 €
 
+******************** Résumé du menu N°2 ********************
+soupe - 6.0 €
+boeuf - 15.0 €
+pates - 3.5 €
+eau gazeuse - 2.5 €
+mousse au chocolat - 6.5 €
+------------------------------
+TOTAL MENU : 33.5 €
+
+================================
+TOTAL COMMANDE : 63.0 €
