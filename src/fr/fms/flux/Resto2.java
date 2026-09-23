@@ -86,11 +86,17 @@ public class Resto2 {
 				System.out.println("Résumé du menu " + (i + 1));
 				System.out.println();
 				
-				double total = 0;
-
+				// Calcule le total d'un menu avec un Stream
+				// La lambda product -> product.getPrice() récupère le prix de chaque produit
+				// puis sum() additionne les prix
+				double total = order.stream()
+						.mapToDouble(product -> product.getPrice())
+						.sum();
+				// Même écriture avec une référence de méthode Product::getPrice
+				// double total = order.stream().mapToDouble(Product::getPrice).sum();
+				
 				for (Product product : order) {
 					System.out.println(product);
-					total += product.getPrice();
 				}
 
 				System.out.println("Total : " + total + " €");
@@ -111,8 +117,6 @@ public class Resto2 {
 					);
 
 					writer.newLine();
-
-					total += product.getPrice();
 				}
 
 				writer.write("------------------------------");
